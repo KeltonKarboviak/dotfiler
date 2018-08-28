@@ -11,6 +11,7 @@ pytest = "*"
 pytest-xdist = "*"
 bumpversion = "*"
 twine = "*"
+pytest-mock = "*"
 
 [requires]
 python_version = "3.7"
