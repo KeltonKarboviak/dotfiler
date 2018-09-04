@@ -15,7 +15,7 @@ class DotfileConfigError(Exception):
     pass
 
 
-class UnsupportedConfigVersionError(Exception):
+class UnsupportedConfigVersionError(DotfileConfigError):
 
     def __init__(self, version: str):
         self.version = version
