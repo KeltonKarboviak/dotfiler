@@ -22,12 +22,14 @@ VERSION = None
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    # 'requests', 'maya', 'records',
+    'pyyaml',
 ]
 
 # What packages are optional?
 EXTRAS = {
-    # 'fancy feature': ['django'],
+    'test': [
+        'pytest', 'pytest-mock', 'pytest-xdist',
+    ],
 }
 
 # The rest you shouldn't have to touch too much :)
