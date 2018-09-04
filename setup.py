@@ -33,7 +33,8 @@ EXTRAS = {
 # The rest you shouldn't have to touch too much :)
 # ------------------------------------------------
 # Except, perhaps the License and Trove Classifiers!
-# If you do change the License, remember to change the Trove Classifier for that!
+# If you do change the License, remember to change the Trove Classifier for
+# that!
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -79,7 +80,9 @@ class UploadCommand(Command):
             pass
 
         self.status('Building Source and Wheel (universal) distribution…')
-        os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+        os.system(
+            '{0} setup.py sdist bdist_wheel --universal'.format(sys.executable)
+        )
 
         self.status('Uploading the package to PyPI via Twine…')
         os.system('twine upload dist/*')
@@ -87,7 +90,7 @@ class UploadCommand(Command):
         self.status('Pushing git tags…')
         os.system('git tag v{0}'.format(about['__version__']))
         os.system('git push --tags')
-        
+
         sys.exit()
 
 
@@ -107,7 +110,7 @@ setup(
         'console_scripts': [
             'dot=dot:cli'
         ],
-    }
+    },
     install_requires=REQUIRED,
     extras_require=EXTRAS,
     license='MIT',
@@ -125,4 +128,3 @@ setup(
         'upload': UploadCommand,
     },
 )
-
