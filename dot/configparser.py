@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from typing import List
+from pathlib import Path
+from typing import List, Union
 
 import yaml
 
 
+DEFAULT_DOTFILES_HOME = Path('~/.dotfiles').expanduser()
 SUPPORTED_VERSIONS = [
     '1.0'
 ]
@@ -32,9 +34,15 @@ class DotfileConfigValueError(DotfileConfigError):
 
 class DotfileConfig(object):
 
-    def __init__(self, version: str, topics: List[str]):
+    def __init__(
+        self,
+        version: str,
+        home_dir: Union[Path, str],
+        topics: List[str]
+    ):
         self.version = version
         self.topics = topics
+        self.home_dir = home_dir
 
 
 class DotfileConfigBuilder(object):
@@ -47,6 +55,11 @@ class DotfileConfigBuilder(object):
 
         return self
 
+    def home_dir(self, home_dir: Union[Path, str]):
+        self._home_dir = Path(home_dir).expanduser()
+
+        return self
+
     def topics(self, topics: List[str]):
         self._topics = topics
 
@@ -55,6 +68,7 @@ class DotfileConfigBuilder(object):
     def build(self):
         return DotfileConfig(
             version=self._version,
+            home_dir=self._home_dir,
             topics=self._topics
         )
 
@@ -72,7 +86,8 @@ class DotfileConfigParser(object):
 
         return DotfileConfigBuilder() \
             .version(str(config.get('version'))) \
-            .topics(config.get('topics', [])) \
+            .home_dir(config.get('dotfiles_home', DEFAULT_DOTFILES_HOME)) \
+            .topics(config.get('topics')) \
             .build()
 
     def _validate_version_key_is_present(self, config: dict):

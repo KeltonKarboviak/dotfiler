@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from io import StringIO
+from pathlib import Path
 from unittest import TestCase, mock
 
 import pytest
 
 from dot.configparser import (
     DotfileConfig,
-    DotfileConfigBuilder,
     DotfileConfigParser,
     DotfileConfigValueError,
     UnsupportedConfigVersionError,
@@ -140,3 +139,41 @@ def test_config_with_no_topics_list_fails(
         pass
 
     # assert
+
+
+def test_config_with_no_dotfiles_home_default(
+    mock,
+    mock_open,
+    mock_yaml,
+    parser,
+    valid_config_with_no_home_dir
+):
+    # arrange
+    mock_yaml.load.return_value = valid_config_with_no_home_dir
+
+    expected_dotfiles_home_dir = Path('~/.dotfiles').expanduser()
+
+    # act
+    config = parser.parse(CONFIG_FILENAME)
+
+    # assert
+    assert expected_dotfiles_home_dir == config.home_dir
+
+
+def test_config_with_dotfiles_home_overrides_default(
+    mock,
+    mock_open,
+    mock_yaml,
+    parser,
+    valid_config_with_home_dir
+):
+    # arrange
+    mock_yaml.load.return_value = valid_config_with_home_dir
+
+    expected_dotfiles_home_dir = Path('~/.dotdir').expanduser()
+
+    # act
+    config = parser.parse(CONFIG_FILENAME)
+
+    # assert
+    assert expected_dotfiles_home_dir == config.home_dir
