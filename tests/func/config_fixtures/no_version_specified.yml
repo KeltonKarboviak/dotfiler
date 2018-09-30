@@ -1,0 +1,6 @@
+---
+
+dotfiles_home: '~/.dotfiles'
+topics:
+  - name: 'python'
+  - name: 'homebrew'
