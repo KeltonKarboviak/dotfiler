@@ -12,6 +12,8 @@ pytest-xdist = "*"
 bumpversion = "*"
 twine = "*"
 pytest-mock = "*"
+pre-commit = "*"
+rope = "*"
 
 [requires]
 python_version = "3.7"
