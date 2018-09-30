@@ -22,7 +22,6 @@ def create_structure_for_topic(topics_dir: Path, topic: Topic):
             fh.write(f'# File: {sym}')
 
 
-
 @pytest.fixture()
 def enabled_topic(topics_dir: Path) -> Topic:
     topic = Topic(

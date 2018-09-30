@@ -131,30 +131,6 @@ def ruby_topic(topics_dir: Path) -> Topic:
     )
 
 
-def test_get_config_successfully_loads_config_file(
-    python_topic: Topic, zsh_topic: Topic,
-):
-    # GIVEN a path to a config file
-    # WHEN it is loaded
-    # THEN a DotfileConfig object is returned with the below loaded:
-    #  * version
-    #  * dotfiles_home
-    #  * topics
-    config_path = Path.home()
-
-    # config = dot.get_config(config_path)
-
-    # assert isinstance(config, DotfileConfig)
-    # assert config.version == '0.1.0'
-    # assert config.dotfiles_home == '~/.dotfiles'
-    # assert config.topics == [python_topic, zsh_topic]
-
-
-def write_config_to_file(config: dict, file_path: Union[Path, str]):
-    with Path(file_path).open('w') as fh:
-        yaml.dump(config, fh)
-
-
 def test_config_with_supported_version_passes():
     # GIVEN a path to a config file with a supported `version` attribute
     # WHEN it is loaded
@@ -248,7 +224,13 @@ def topic_config_no_enabled(topic_config_default: dict) -> dict:
 @pytest.mark.parametrize('topic_config, expected_topic', [
     param(
         {'name': 'python'},
-        Topic('python', enabled=True, installer='install.zsh', aliaser='aliases.zsh', pather='paths.zsh', enver='envs.zsh'),
+        Topic(
+            'python',
+            enabled=True,
+            installer='install.zsh',
+            aliaser='aliases.zsh',
+            pather='paths.zsh',
+            enver='envs.zsh'),
         id='defaults',
     ),
     param(
