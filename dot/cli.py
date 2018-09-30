@@ -3,4 +3,3 @@
 
 def cli():
     print('Welcome to Dotfiler CLI!')
-

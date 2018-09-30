@@ -1,6 +1,17 @@
-from .__version__ import __version__
-from .cli import cli
+# -*- coding: utf-8 -*-
 
-if __name__ == "__main__":
-    cli()
-
+from .api import (  # noqa: F401
+    link_topic,
+    list_topics,
+)
+from .config import (  # noqa: F401
+    DotfileConfig,
+    get_config,
+    parse_topic,
+)
+from .topic import (  # noqa:F401
+    Topic,
+)
+from .cli import (  # noqa:F401
+    cli,
+)
