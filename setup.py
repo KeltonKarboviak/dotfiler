@@ -12,7 +12,7 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-NAME = 'dot'
+NAME = 'dotfiler'
 DESCRIPTION = 'Simple dotfiles manager.'
 URL = 'https://github.com/KeltonKarboviak/dotfiler'
 EMAIL = 'kelton.karboviak@gmail.com'
@@ -53,7 +53,7 @@ except FileNotFoundError:
 # Load the package's __version__.py module as a dictionary.
 about = {}
 if not VERSION:
-    with open(os.path.join(here, NAME, '__version__.py')) as f:
+    with open(os.path.join(here, 'dot', '__version__.py')) as f:
         exec(f.read(), about)
 else:
     about['__version__'] = VERSION
@@ -76,6 +76,22 @@ class UploadCommand(Command):
     def finalize_options(self):
         pass
 
+    @staticmethod
+    def get_bumpversion_part():
+        valid_parts = ['major', 'minor', 'patch']
+        part = None
+        while part not in valid_parts:
+            part = input(
+                f'What part would you like to bump: [{",".join(valid_parts)}]? '
+            ).strip().lower()
+        return part
+
+    @staticmethod
+    def run_system_call(cmd: str):
+        status = os.system(cmd)
+        if status:
+            sys.exit(status)
+
     def run(self):
         try:
             self.status('Removing previous builds…')
@@ -83,15 +99,21 @@ class UploadCommand(Command):
         except OSError:
             pass
 
+        self.status('Bumping package version…')
+        part = self.get_bumpversion_part()
+        self.run_system_call('bumpversion {}'.format(part))
+
         self.status('Building Source and Wheel distribution…')
-        os.system('{0} setup.py sdist bdist_wheel'.format(sys.executable))
+        self.run_system_call('{} setup.py sdist bdist_wheel'.format(sys.executable))
+
+        self.status('Validating distribution files via Twine…')
+        self.run_system_call('twine check dist/*')
 
         self.status('Uploading the package to PyPI via Twine…')
-        os.system('twine upload dist/*')
+        self.run_system_call('twine upload dist/*')
 
-        # self.status('Pushing git tags…')
-        # os.system('git tag v{0}'.format(about['__version__']))
-        # os.system('git push --tags')
+        self.status('Pushing git tags…')
+        self.run_system_call('git push --tags')
 
         sys.exit()
 
@@ -107,7 +129,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    packages=find_packages(exclude=('tests',)),
+    packages=find_packages(exclude=('tests*',)),
     entry_points={
         'console_scripts': ['dot=dot:cli'],
     },
