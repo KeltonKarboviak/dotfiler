@@ -13,7 +13,7 @@ from setuptools import find_packages, setup, Command
 
 # Package meta-data.
 NAME = 'dot'
-DESCRIPTION = 'My short description for my project.'
+DESCRIPTION = 'Simple dotfiles manager.'
 URL = 'https://github.com/KeltonKarboviak/dotfiler'
 EMAIL = 'kelton.karboviak@gmail.com'
 AUTHOR = 'Kelton Karboviak'
@@ -28,7 +28,9 @@ REQUIRED = [
 # What packages are optional?
 EXTRAS = {
     'test': [
-        'pytest', 'pytest-mock', 'pytest-xdist',
+        'pytest',
+        'pytest-mock',
+        'pytest-xdist',
     ],
 }
 
@@ -81,17 +83,15 @@ class UploadCommand(Command):
         except OSError:
             pass
 
-        self.status('Building Source and Wheel (universal) distribution…')
-        os.system(
-            '{0} setup.py sdist bdist_wheel --universal'.format(sys.executable)
-        )
+        self.status('Building Source and Wheel distribution…')
+        os.system('{0} setup.py sdist bdist_wheel'.format(sys.executable))
 
         self.status('Uploading the package to PyPI via Twine…')
         os.system('twine upload dist/*')
 
-        self.status('Pushing git tags…')
-        os.system('git tag v{0}'.format(about['__version__']))
-        os.system('git push --tags')
+        # self.status('Pushing git tags…')
+        # os.system('git tag v{0}'.format(about['__version__']))
+        # os.system('git push --tags')
 
         sys.exit()
 
@@ -109,9 +109,7 @@ setup(
     url=URL,
     packages=find_packages(exclude=('tests',)),
     entry_points={
-        'console_scripts': [
-            'dot=dot:cli'
-        ],
+        'console_scripts': ['dot=dot:cli'],
     },
     install_requires=REQUIRED,
     extras_require=EXTRAS,
