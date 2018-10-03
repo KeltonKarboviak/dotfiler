@@ -9,9 +9,10 @@ cache:
   directories:
   - $HOME/.cache/pipenv
 env:
-- PIPENV_VENV_IN_PROJECT=true
-- PIPENV_SHELL_FANCY=false
-- PIPENV_NO_SPIN=true
+  global:
+  - PIPENV_VENV_IN_PROJECT=true
+  - PIPENV_SHELL_FANCY=false
+  - PIPENV_NO_SPIN=true
 before_install:
 - pip install -U pip pipenv
 install:
