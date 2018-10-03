@@ -14,7 +14,7 @@ env:
   - PIPENV_VENV_IN_PROJECT=true
 before_install:
 # - pip install -U pip pipenv
-- docker build -t KeltonKarboviak/dotfiler .
+- docker build -t keltonkarboviak/dotfiler .
 # install:
 # - pipenv install --dev --deploy
 script:
