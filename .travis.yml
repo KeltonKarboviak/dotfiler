@@ -19,7 +19,7 @@ before_install:
 # - pipenv install --dev --deploy
 script:
 # - pytest tests/
-- docker run KeltonKarboviak/dotfiler pytest tests/
+- docker run keltonkarboviak/dotfiler pytest tests/
 notifications:
   slack:
     secure: i1b73+7unXWhjC6iFWAXzlgPoc5v8uiiUWTU0CM6BmAorHiwAmZrmIhp6cCyYR7O3n5244+yK65IrmI9R6G8cEObFat0dU18fCtfbz9kOBsgGLpfQnS70rWacSC4o+hAbOps79Ib+YF2HU2SEucDSr21gQt1BnrWSzQm3/J00z3yHWwiTAFXoffwr/n1LUmqqH9/lgkALMeZ5zSFzib4h0MCMXOxQapkRW6of2rRGA21nxsAAR9ZYIRmY9P+P8oju5Vyf3gDI2XcMmBp64MExxq1W/9LPk2GIyMGAH+clbfOxcpLF7UKMXQUqO0t3rnFA3tgC1Pfo+J/Ymk5S4uldQzOREyclyHQqa9WSxB8AnPilz2kBOM4JHh0csoBHYuJ2cpGg3vk1+CXd9kaFEjSEpNpHcIKrrxlq7JMF5dGlVvsrRtVn0v7HoRkyiA55BleB5OkYJIs1s6U8PZgTFJQqtlAz8EU+tckGviOQvPbUZVQ+4j3w3hUfA3/3IEz6I++uQZke0PdQkIDGVA9Me3zdkceXWgmsxFa+3eFmwgHERNVMJ351tDCIBtLeHtX1HN8MdsYG4PaOG7w8ENrHYYGxOQGF1M/uUrpLajhd+ykAKvXKY/Z0I0d+7xVX8KvYn9PFCFhyvEPgDhTyd95gJkR5SOqALvt+JngAPqJCrP0RaA=
