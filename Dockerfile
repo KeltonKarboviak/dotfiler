@@ -1,4 +1,4 @@
-FROM heroku/heroku:18-build
+FROM heroku/heroku:18-build as pipenv-builder
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL C.UTF-8
@@ -24,6 +24,9 @@ ONBUILD COPY Pipfile.lock Pipfile.lock
 
 # -- Install dependencies:
 ONBUILD RUN set -ex && pipenv install --dev --deploy
+
+
+FROM pipenv-builder
 
 # -- Do stuff
 
