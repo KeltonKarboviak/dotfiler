@@ -2,7 +2,12 @@ language: python
 python:
 - '3.6'
 - '3.7-dev'
-cache: pip
+before_cache:
+- ls -al $HOME/.cache/pip*
+cache:
+  pip: true
+  directories:
+  - $HOME/.cache/pipenv
 env:
 - PIPENV_VENV_IN_PROJECT=true
 before_install:
